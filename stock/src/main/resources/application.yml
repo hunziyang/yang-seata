@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: stock-service
+  datasource:
+    url: jdbc:mysql://192.168.52.130:3306/seata-test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.52.130:8848
+        username: nacos
+        password: nacos
+        namespace: 9ed4e7c9-3aca-4678-a7b6-5043b681a4ab
+        group: SEATA
+server:
+  port: 9999
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+seata:
+  enabled: true
+  registry:
+    nacos:
+      application: seata-server
+      group: SEATA_GROUP
+      server-addr: 192.168.52.130:8848
+      username: nacos
+      password: nacos
+      namespace: 9ed4e7c9-3aca-4678-a7b6-5043b681a4ab
+    type: nacos
+  config:
+    nacos:
+      server-addr: 192.168.52.130:8848
+      group: SEATA_GROUP
+      namespace: 9ed4e7c9-3aca-4678-a7b6-5043b681a4ab
+      password: nacos
+      username: nacos
+    type: nacos
+  enable-auto-data-source-proxy: true
+  tx-service-group: backend_tx_group
+  service:
+    vgroup-mapping:
+      backend_tx_group: backend
